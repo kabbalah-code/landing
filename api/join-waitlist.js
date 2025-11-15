@@ -91,21 +91,3 @@ module.exports = async function handler(req, res) {
         });
     }
 };
-```
-
----
-
-## 📝 **Шаг 4: Обновите Environment Variables в Vercel**
-
-1. **Settings** → **Environment Variables**
-2. Найдите `MONGODB_URI` и нажмите **Edit** (или удалите и создайте заново)
-3. Вставьте **НОВЫЙ** connection string:
-
-**Формат:**
-```
-mongodb+srv://USERNAME:PASSWORD@clusterNAME.XXXXX.mongodb.net/?retryWrites=true&w=majority
-```
-
-**Пример:**
-```
-mongodb+srv://kabbalah_user:MyPassword123@cluster0.ab12cd.mongodb.net/?retryWrites=true&w=majority
