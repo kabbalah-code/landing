@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "description": "Kabbalah Code - Web3 Soul Discovery Platform",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "vercel build",
-    "deploy": "vercel --prod"
+    "build": "echo 'No build needed for static site'",
+    "dev": "vercel dev"
   },
   "dependencies": {
     "mongodb": "^6.3.0"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=18.x"
   }
