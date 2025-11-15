@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kabbalah Code — Your Wallet Has a Soul Number</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(180deg, #081226 0%, #1C3055 100%);
+            color: #F8F9FA;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .tree-of-life {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 1000px;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><circle cx="200" cy="50" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="140" cy="120" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="260" cy="120" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="200" cy="200" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="100" cy="250" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="300" cy="250" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="200" cy="320" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="140" cy="400" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="260" cy="400" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><circle cx="200" cy="470" r="30" fill="none" stroke="%23EBC364" stroke-width="2"/><line x1="200" y1="50" x2="140" y2="120" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="200" y1="50" x2="260" y2="120" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="140" y1="120" x2="200" y2="200" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="260" y1="120" x2="200" y2="200" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="200" y1="200" x2="100" y2="250" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="200" y1="200" x2="300" y2="250" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="100" y1="250" x2="200" y2="320" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="300" y1="250" x2="200" y2="320" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="200" y1="320" x2="140" y2="400" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="200" y1="320" x2="260" y2="400" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="140" y1="400" x2="200" y2="470" stroke="%23EBC364" stroke-width="1" opacity="0.6"/><line x1="260" y1="400" x2="200" y2="470" stroke="%23EBC364" stroke-width="1" opacity="0.6"/></svg>') center/contain no-repeat;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #EBC364;
+            text-shadow: 0 0 20px rgba(235, 195, 100, 0.6),
+                         0 0 40px rgba(235, 195, 100, 0.4),
+                         0 0 60px rgba(235, 195, 100, 0.2);
+            margin-bottom: 20px;
+            animation: pulse-glow 3s ease-in-out infinite;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(235, 195, 100, 0.6),
+                             0 0 40px rgba(235, 195, 100, 0.4),
+                             0 0 60px rgba(235, 195, 100, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(235, 195, 100, 0.8),
+                             0 0 60px rgba(235, 195, 100, 0.6),
+                             0 0 90px rgba(235, 195, 100, 0.4);
+            }
+        }
+
+        .aleph {
+            font-size: clamp(6rem, 15vw, 12rem);
+            color: #EBC364;
+            text-shadow: 0 0 30px rgba(235, 195, 100, 0.8),
+                         0 0 60px rgba(235, 195, 100, 0.6);
+            margin: 30px 0;
+            animation: aleph-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes aleph-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #F8F9FA;
+            text-shadow: 0 0 10px rgba(248, 249, 250, 0.5);
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #EBC364 0%, #D4A853 100%);
+            color: #081226;
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(235, 195, 100, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(235, 195, 100, 0.7),
+                        0 0 60px rgba(235, 195, 100, 0.4);
+        }
+
+        .social-icons {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .social-icons a {
+            color: #EBC364;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(235, 195, 100, 0.4);
+        }
+
+        .social-icons a:hover {
+            text-shadow: 0 0 20px rgba(235, 195, 100, 0.8);
+            transform: scale(1.2);
+        }
+
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #EBC364;
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 0 0 15px rgba(235, 195, 100, 0.5);
+            font-weight: 700;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(235, 195, 100, 0.05);
+            border: 1px solid rgba(235, 195, 100, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(235, 195, 100, 0.1);
+            border-color: rgba(235, 195, 100, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(235, 195, 100, 0.2);
+        }
+
+        .step-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(235, 195, 100, 0.6));
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            color: #EBC364;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .step-description {
+            color: #F8F9FA;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .preview-box {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(170, 80, 100, 0.1);
+            border: 2px solid rgba(170, 80, 100, 0.3);
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(170, 80, 100, 0.2);
+        }
+
+        .preview-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #AA5064;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(170, 80, 100, 0.5);
+            font-weight: 700;
+        }
+
+        .preview-content {
+            color: #F8F9FA;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .cta-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #EBC364;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(235, 195, 100, 0.6);
+            font-weight: 700;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: #EBC364;
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 2px solid #EBC364;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .secondary-button:hover {
+            background: rgba(235, 195, 100, 0.1);
+            box-shadow: 0 0 30px rgba(235, 195, 100, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .waitlist-form {
+            max-width: 500px;
+            margin: 40px auto 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .waitlist-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 18px 25px;
+            font-size: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            background: rgba(235, 195, 100, 0.05);
+            border: 2px solid rgba(235, 195, 100, 0.3);
+            border-radius: 50px;
+            color: #F8F9FA;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .waitlist-input::placeholder {
+            color: rgba(248, 249, 250, 0.5);
+        }
+
+        .waitlist-input:focus {
+            border-color: #EBC364;
+            background: rgba(235, 195, 100, 0.1);
+            box-shadow: 0 0 20px rgba(235, 195, 100, 0.3);
+        }
+
+        .waitlist-button {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #EBC364 0%, #D4A853 100%);
+            color: #081226;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(235, 195, 100, 0.4);
+        }
+
+        .waitlist-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(235, 195, 100, 0.7);
+        }
+
+        .waitlist-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .waitlist-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .waitlist-success {
+            color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .waitlist-error {
+            color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        footer {
+            padding: 60px 20px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(235, 195, 100, 0.2);
+        }
+
+        .disclaimer {
+            color: #F8F9FA;
+            opacity: 0.7;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            color: #EBC364;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .social-icons {
+                position: relative;
+                bottom: 0;
+                margin-top: 40px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tree-of-life"></div>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="content">
+        <section class="hero">
+            <h1 class="logo">KABBALAH CODE</h1>
+            <div class="aleph">א</div>
+            <p class="subtitle">Your Wallet Has a Soul Number</p>
+            <button class="cta-button">Begin Your Ritual →</button>
+            
+            <div class="social-icons">
+                <a href="#" aria-label="Twitter">𝕏</a>
+                <a href="#" aria-label="Telegram">✈</a>
+                <a href="#" aria-label="GitHub">⚙</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">The Sacred Path</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">🔹</div>
+                    <h3 class="step-title">Connect</h3>
+                    <p class="step-description">Link your wallet or Twitter account to unlock your unique soul signature</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">✨</div>
+                    <h3 class="step-title">Receive</h3>
+                    <p class="step-description">Get your personalized prophecy based on the ancient wisdom of Kabbalah</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🌳</div>
+                    <h3 class="step-title">Grow</h3>
+                    <p class="step-description">Ascend through the Tree of Life and unlock deeper layers of consciousness</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">A Glimpse of Your Destiny</h2>
+            <div class="preview-box">
+                <p class="preview-text">Wallet 0x7a3f...9e2c</p>
+                <p class="preview-content">
+                    Your soul number resonates with <strong>Chesed</strong> — the sphere of loving-kindness. 
+                    The cosmic alignment suggests a path of generosity and expansion. 
+                    Your next ritual: <em>Connect with three souls before the new moon</em>.
+                </p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 class="cta-title">The Ritual Begins Soon</h2>
+            
+            <form class="waitlist-form" id="waitlistForm">
+                <input 
+                    type="email" 
+                    class="waitlist-input" 
+                    placeholder="your@email.com" 
+                    required
+                    id="emailInput"
+                    aria-label="Email address"
+                >
+                <button type="submit" class="waitlist-button" id="submitButton">
+                    Join Waitlist
+                </button>
+            </form>
+            <div id="waitlistMessage" class="waitlist-message" style="display: none;"></div>
+            
+            <div class="cta-buttons" style="margin-top: 40px;">
+                <a href="#" class="secondary-button">Join Telegram</a>
+                <a href="#" class="secondary-button">Follow on X</a>
+            </div>
+        </section>
+
+        <footer>
+            <p class="disclaimer">
+                Kabbalah Code is for entertainment and self-exploration purposes only. 
+                This is not financial, medical, or spiritual advice. 
+                Always do your own research and consult professionals.
+            </p>
+            <p class="copyright">© 2025 Kabbalah Code</p>
+        </footer>
+    </div>
+
+    <script>
+        // Particles animation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 2 + 1;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.pulse = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                this.pulse += 0.02;
+                
+                if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                const pulseOpacity = this.opacity * (0.7 + Math.sin(this.pulse) * 0.3);
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size * 4
+                );
+                gradient.addColorStop(0, `rgba(235, 195, 100, ${pulseOpacity})`);
+                gradient.addColorStop(1, 'rgba(235, 195, 100, 0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Waitlist форма с реальным API
+        document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('emailInput');
+            const submitButton = document.getElementById('submitButton');
+            const messageDiv = document.getElementById('waitlistMessage');
+            const email = emailInput.value.trim();
+            
+            if (!email) return;
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'Joining...';
+            
+            try {
+                const response = await fetch('/api/join-waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.textContent = '✨ Welcome to the ritual! Check your email soon.';
+                    messageDiv.className = 'waitlist-message waitlist-success';
+                    messageDiv.style.display = 'block';
+                    emailInput.value = '';
+                    
+                    setTimeout(() => {
+                        messageDiv.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error(data.error || 'Failed to join waitlist');
+                }
+                
+            } catch (error) {
+                console.error('Waitlist error:', error);
+                messageDiv.textContent = '⚠ ' + (error.message || 'Something went wrong. Please try again.');
+                messageDiv.className = 'waitlist-message waitlist-error';
+                messageDiv.style.display = 'block';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Join Waitlist';
+            }
+        });
+    </script>
+</body>
+</html>
